@@ -1,0 +1,7 @@
+
+
+/node_modules
+variables.env
+/backend-movieapp/src/public/img/profiles/
+*.jpg
+*.png
