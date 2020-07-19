@@ -6,7 +6,7 @@ const RegisterSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    type: {
+    itemType: {
         required: true,
         type: String
     },

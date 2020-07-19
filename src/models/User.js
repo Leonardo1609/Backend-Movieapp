@@ -16,6 +16,13 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true 
     },
+    favorites: [{
+        name: String,
+        release_date: String,
+        id: Number,
+        poster_path: String,
+        itemType: String    
+    }],
     biography: String,
     image: String
 });

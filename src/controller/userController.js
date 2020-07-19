@@ -107,12 +107,20 @@ exports.getUser = async ( req, res ) => {
 exports.updateUser = async( req, res ) => {
     try {
         const user = await User.findById( req.user.id );
-        const { username, email, biography } = req.body;
-        
+        const { username, email, biography, favorites } = req.body;
+                
+        const userExists = await User.findOne({ username });
+
+        if( userExists && userExists.username !== user.username ){
+            return res.status(400).json({ message: 'Username invalid. User already exists' });
+        } 
+
         user.username = username;
         user.email = email;
         user.biography = biography;
-                
+        user.favorites = favorites;
+        
+        // console.log( req.body );
         await user.save();
         res.json({ user });
         
