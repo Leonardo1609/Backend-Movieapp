@@ -28,6 +28,7 @@ const multerConfig = {
     }
 }
 
+                                            // 'image' because I recieve from formData.get('image') 
 const upload = multer( multerConfig ).single( 'image' );
 
 exports.uploadImage = async ( req, res, next ) => {
@@ -111,6 +112,7 @@ exports.updateUser = async( req, res ) => {
                 
         const userExists = await User.findOne({ username });
 
+        // si se quire modificar el username por un usuario que ya existe
         if( userExists && userExists.username !== user.username ){
             return res.status(400).json({ message: 'Username invalid. User already exists' });
         } 

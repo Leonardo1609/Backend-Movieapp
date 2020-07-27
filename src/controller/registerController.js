@@ -24,7 +24,6 @@ exports.registerItem = async ( req, res ) => {
 // Obtener registros según el usuario
 exports.getRegistersOfUser = async ( req, res ) => {
     try {
-
         const { username } = req.query;
         const user = await User.findOne({ username });
         const registers = await Register.find({ user: user._id }).sort({ registeredAt: 'desc' });
@@ -59,12 +58,11 @@ exports.getRegisters = async ( req, res ) => {
 
 exports.getRegisterOfUser = async ( req, res ) => {
     try {
-        const register = await Register.findOne({ id: req.params.id, user: req.body.userId });
-
+        const register = await Register.findOne({ id: req.params.id, user: req.query.userId });
+        
         if ( !register ){
             return res.status( 404 ).json({ 'message': 'No register Found!' })
         }
-
         res.json({ register });
 
     } catch (error) {
