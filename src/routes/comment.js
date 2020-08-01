@@ -8,13 +8,19 @@ router.post('/register/:id',
     commentController.postComment
 );
 
-router.patch('/register/:id',
+router.patch('/:id',
     auth,
     commentController.editComment
-)
+);
 
-router.delete('/register/:id',
+router.delete('/register/:registId/comment/:id',
     auth,
     commentController.deleteComment
-)
+);
+
+router.get('/register/:id',
+    commentController.getComments
+);
+
+
 module.exports = router;

@@ -109,9 +109,9 @@ exports.updateLikes = async ( req, res ) => {
             return res.status(404).json({ msg: 'Register not found' });
         }
         
-        if( register.user.toString() === req.user.id ){
-            return res.status(401).json({ msg: 'No permited. You can liked your review!' });
-        }
+        // if( register.user.toString() === req.user.id ){
+        //     return res.status(401).json({ msg: 'No permited. You can liked your review!' });
+        // }
         
         if( !register.review ) {
             return res.status(401).json({ msg: 'No permited!' });

@@ -89,7 +89,6 @@ exports.createUser = async ( req, res ) => {
 exports.getUser = async ( req, res ) => {
     try {
         const { username } = req.query;
-        console.log( 'USERNAME', username );
 
         const user = await User.findOne({ username }).select('-password -__v');
 
@@ -122,7 +121,6 @@ exports.updateUser = async( req, res ) => {
         user.biography = biography;
         user.favorites = favorites;
         
-        // console.log( req.body );
         await user.save();
         res.json({ user });
         
