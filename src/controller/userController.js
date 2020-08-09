@@ -5,7 +5,6 @@ const bcrypt = require('bcryptjs');
 const multer = require('multer');
 const shortid = require('shortid');
 const fs = require('fs');
-const { dirname } = require('path');
 
 // MULTER
 const multerConfig = {
@@ -57,9 +56,20 @@ exports.createUser = async ( req, res ) => {
     }
 
     try {
-        const { password } = req.body;
+        const { username, email, password } = req.body;
 
-        const user = new User( req.body );
+        let user = await User.findOne({ username });
+
+        if( user ){
+            return res.status(400).json({ msg: 'Username already exists'})
+        }
+        
+        user = await User.findOne({ email });
+        if( user ){
+            return res.status(400).json({ msg: 'Email already exists'})
+        }
+
+        user = new User( req.body );
         
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hashSync( password, salt );
@@ -113,7 +123,7 @@ exports.updateUser = async( req, res ) => {
 
         // si se quire modificar el username por un usuario que ya existe
         if( userExists && userExists.username !== user.username ){
-            return res.status(400).json({ message: 'Username invalid. User already exists' });
+            return res.status(400).json({ msg: 'Username invalid. User already exists' });
         } 
 
         user.username = username;
@@ -159,3 +169,24 @@ exports.updateImage = async ( req, res ) => {
     }
 }
 
+exports.changePassword = async ( req, res ) => {
+    try {
+        const { password, newPassword } = req.body;
+        const user = await User.findById( req.user.id );
+
+        const correctPassword = await bcrypt.compareSync( password, user.password );
+        if( !correctPassword ){
+            return res.status(400).json({ msg: 'Incorrect Password!' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hashSync( newPassword, salt );
+
+        await user.save();
+        res.json({ msg: "Password Changed!" });
+        
+    } catch (error) {
+        console.log( error );
+        res.status(500).send( 'There was an error' );
+    }
+}

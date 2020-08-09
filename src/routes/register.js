@@ -26,7 +26,7 @@ router.get('/',
     registerController.getRegisters
 );
 
-router.get('/:id',
+router.get('/:id/:type',
     registerController.getRegisterOfUser
 );
 

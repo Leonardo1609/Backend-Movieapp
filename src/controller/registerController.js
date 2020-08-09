@@ -58,8 +58,7 @@ exports.getRegisters = async ( req, res ) => {
 
 exports.getRegisterOfUser = async ( req, res ) => {
     try {
-        const register = await Register.findOne({ id: req.params.id, user: req.query.userId });
-        
+        const register = await Register.findOne({ id: req.params.id, itemType: req.params.type, user: req.query.userId });
         if ( !register ){
             return res.status( 404 ).json({ 'message': 'No register Found!' })
         }
