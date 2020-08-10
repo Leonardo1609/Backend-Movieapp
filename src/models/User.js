@@ -24,7 +24,9 @@ const UserSchema = mongoose.Schema({
         itemType: String    
     }],
     biography: String,
-    image: String
+    image: String,
+    token: String,
+    expires: Date
 });
 
 module.exports = mongoose.model( 'User', UserSchema );

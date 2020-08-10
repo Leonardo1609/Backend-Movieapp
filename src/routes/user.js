@@ -9,9 +9,9 @@ const auth = require('../middlewares/auth');
 
 router.post( '/', [
     check('username', 'Username is required').notEmpty(),
-    check('username', 'Username out of range (min. 6 characteres, max. 15 characters').isLength({ min: 6, max: 15 }),
+    check('username', 'Username out of range (min. 6 characters, max. 15 characters').isLength({ min: 6, max: 15 }),
     check('password', 'Password is required').notEmpty(),
-    check('password', 'Password out of range (min. 6 characteres)').isLength({ min: 6 }),
+    check('password', 'Password out of range (min. 6 characters)').isLength({ min: 6 }),
     check('email', 'Email is required').notEmpty(),
     check('email', 'Insert a valid email').isEmail()
 ], userController.createUser );

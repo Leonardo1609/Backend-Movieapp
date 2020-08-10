@@ -17,5 +17,12 @@ router.get('/',
     authController.getUser
 );
 
+router.post('/reset-password',
+    authController.sendEmailToResetPassword
+);
+
+router.post('/reset-password/:token',
+    authController.resetPassword
+)
 module.exports = router;
 
